@@ -1,0 +1,24 @@
+{
+  "name": "discord.js-transcript",
+  "version": "1.0.2",
+  "description": "An extended discord.js v13 transcript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Walledgarden/discord.js-transcript.git"
+  },
+  "author": "Walledgarden",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Walledgarden/discord.js-transcript/issues"
+  },
+  "homepage": "https://github.com/Walledgarden/discord.js-transcript#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "discord.js": "^13.6.0",
+    "jsdom": "^19.0.0"
+  }
+}
