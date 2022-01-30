@@ -6,9 +6,9 @@ const embed = ({author_name, author_image, author_url, title, url, description, 
         <div class="card embed">
             <div class="card-block">
                 <div class="embed-inner">
-                    ${(typeof author !== "undefined" ? `
+                    ${(typeof author_name !== "undefined" ? `
                         <div class="embed-author">
-                            ${(typeof author_image !== "undefined" ? `<img class="embed-author-icon" src="${author_image}">` : ``)}
+                            ${(typeof author_image !== "undefined" ? `<img class="embed-author-icon" src="${author_image}" alt="${author_name}">` : ``)}
                             ${(typeof author_name !== "undefined" ? `<a class="embed-author-name" href="${author_url || ''}">${author_name}</a>` : ``)}
                         </div>
                     ` : '')}
