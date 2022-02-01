@@ -1,6 +1,6 @@
 {
   "name": "discord.js-transcript",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An extended discord.js v13 transcript",
   "main": "index.js",
   "scripts": {
