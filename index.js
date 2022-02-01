@@ -14,6 +14,7 @@ const createElementFromHTML = (document, htmlString) => {
  */
 const parseMentions = (text, guild, client) => {
     text = text.replaceAll(/<@!?(\d+)>/g, (f, o = '$1') => { return `<span class="mention">@${client.users.cache.find(u => u.id === o)?.username}</span>`; }); // User Mentions
+    text = text.replaceAll(/<#(\d+)>/g, (f, o = '$1') => { return `<span class="mention">#${client.channels.cache.find(c => c.id === o)?.name}</span>`; }); // Channel Mentions
     text = text.replaceAll(/<@&(\d+)>/g, (f, o = '$1') => { return `<span class="mention" style="background: ${guild.roles.cache.find(g => g.id === o)?.hexColor}33; color: ${guild.roles.cache.find(g => g.id === o)?.hexColor}">@${guild.roles.cache.find(g => g.id === o)?.name}</span>`; }); // Role Mentions
     text = text.replaceAll(/<a:(.+):(\d+)>/g, (f, b, o) => { return `<img src="https://cdn.discordapp.com/emojis/${o}.gif?size=96&quality=lossless" width="${(/^<a:(.+):(\d+)>$/).test(text) ? '48px' : '22px'}" height="${(/^<a:(.+):(\d+)>$/).test(text) ? '48px' : '22px'}">`; }); // Animted Emotes
     text = text.replaceAll(/<:(.+):(\d+)>/g, (f, b, o) => { return `<img src="https://cdn.discordapp.com/emojis/${o}.webp?size=96&quality=lossless" width="${(/^<:(.+):(\d+)>$/).test(text) ? '48px' : '22px'}" height="${(/^<:(.+):(\d+)>$/).test(text) ? '48px' : '22px'}">`; }); // Normal Emotes
@@ -22,6 +23,7 @@ const parseMentions = (text, guild, client) => {
     text = text.replaceAll(/\*(.\n+)\*/g, '<i>$1</i>'); // Italic
     text = text.replaceAll(/\`\`\`(.+)?\n([\s\S]*)\n\`\`\`/g, (a, b, c = '$2') => { return `<div class="codeblock" style="font-size: 11px; white-space:pre-wrap;">${c.replaceAll(/\n/g, '<br>').replaceAll(/\t/g, '&#09;')}</div>` }); // Code Block
     text = text.replaceAll(/\`(.+)\`/g, '<code style="background: rgb(47, 49, 54); color: white;">$1</code>'); // Inline Code
+    text = text.replaceAll(/\[(.+)\]\((.+)\)/g, ' <a href="$2">$1</a> '); // URL
     text = text.replaceAll(/<:(.+):(\d+)>/g, (f, b, o) => { return `<img src="https://cdn.discordapp.com/emojis/${o}.webp?size=96&quality=lossless" width="${(/^<:(.+):(\d+)>$/).test(text) ? '48px' : '22px'}" height="${(/^<:(.+):(\d+)>$/).test(text) ? '48px' : '22px'}">`; }); // Code
     return text;
 }
@@ -109,6 +111,17 @@ module.exports.fetchTranscript = (messages, client) => {
                     })
                 )
             );
+        }
+
+        for (const attachment of message.attachments) {
+            if((/\.(png|jpeg|jpg|webp|tif|tiff|bmp|gif|)$/).test(attachment.name)) {
+                messaged.appendChild(
+                    createElementFromHTML(
+                        document,
+                        `<img src="${attachment.url}" alt="${attachment.name}">`
+                    )
+                );
+            }
         }
 
         for (const sticker of message.stickers) {
